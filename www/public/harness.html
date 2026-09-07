@@ -1,0 +1,88 @@
+<body style="margin:0;background:#888">
+<iframe id="f" src="/" width="1400" height="2600" style="border:0"></iframe>
+<img src="/slow" style="display:none">
+<script>
+document.title += '|RUNNING';
+document.addEventListener('DOMContentLoaded', () => {
+    fetch('/diag?d=PING-A');
+    setTimeout(() => fetch('/diag?d=PING-B'), 1000);
+});
+setTimeout(async () => {
+    try {
+        const w = document.getElementById('f').contentWindow;
+        let d = null;
+        for (let t = 0; t < 50; t++) {
+            await new Promise(r => setTimeout(r, 400));
+            try {
+                if (w.document && w.document.body && w.document.querySelectorAll('[x-data]').length) {
+                    d = w.document;
+                    break;
+                }
+            } catch (e) { /* cross-origin guard */ }
+        }
+        if (!d) throw new Error('iframe not ready');
+        for (let t = 0; t < 40; t++) {
+            if (w.__cfMarkerInit) break;
+            await new Promise(r => setTimeout(r, 400));
+        }
+        const apex = typeof w.ApexCharts;
+        const el = d.querySelector('[x-data^="cashFlowDashboard"]');
+        const stack = el ? (el._x_dataStack ? el._x_dataStack.length : null) : null;
+        const xEls = d.querySelectorAll('[x-data]');
+        const anyStack = Array.from(xEls).filter(e => e._x_dataStack).length;
+        const svgCount = d.querySelectorAll('.apexcharts-canvas svg').length;
+        const bars = Array.from(d.querySelectorAll('.apexcharts-bar-area'))
+            .map(r => parseFloat(r.getAttribute('height')) || 0)
+            .filter(h => h > 2).length;
+        const hasCard = d.body.innerText.includes('Arus Kas Harian');
+        const hasRef = !!d.querySelector('[x-ref="chartEl"]');
+        const labels = Array.from(d.querySelectorAll('.apexcharts-xaxis-label')).length;
+        try {
+            w.__p = 'idle';
+            w.eval('(function(){ try { window.__p = "run"; Alpine.data("probeInit", function(){ return { init(){ window.__p = window.__p + "-init"; }, b: 5 }; }); var dv = document.createElement("div"); dv.setAttribute("x-data", "probeInit()"); document.body.appendChild(dv); window.Alpine.initTree(dv); window.__p = window.__p + "-tree"; } catch(e) { window.__p = "ERR:" + e.message; } })()');
+        } catch (e) { w.__p = 'EVALERR:' + e.message; }
+        const vDiv = d.createElement('div');
+        d.body.appendChild(vDiv);
+        try {
+            const vc = new w.ApexCharts(vDiv, {
+                chart: { type: 'bar', height: 120 },
+                series: [{ name: 'V', data: [1, 2] }],
+                xaxis: { categories: ['a', 'b'] }
+            });
+            vc.render();
+            await new Promise(r => setTimeout(r, 600));
+            w.__vChart = {
+                n: vDiv.querySelectorAll('svg').length,
+                cls: (vDiv.querySelector('svg') || {}).className
+            };
+        } catch (e) {
+            w.__vChart = 'ERR:' + e.message;
+        }
+        const state = JSON.stringify({
+            apex, alpine: typeof w.Alpine, alpineVer: (w.Alpine && w.Alpine.version) || null,
+            fnType: typeof w.cashFlowDashboard,
+            cfScriptRan: w.__cfScriptRan === true ? 'yes' : String(w.__cfScriptRan),
+            cfTitle: w.document && w.document.title,
+            storeTheme: (function(){ try { return typeof (w.Alpine && w.Alpine.store && w.Alpine.store('theme')); } catch(e){ return 'X:' + e.message; } })(),
+            dataFn: (function(){ try { w.Alpine.data('__tempProbe', () => ({})); return 'ok'; } catch(e){ return 'ERR:' + e.message; } })(),
+            elInit: w.__cfMarkerInit || null,
+            elRender: w.__cfMarkerRender || null,
+            elFound: w.__cfMarkerEl || null,
+            elNew: w.__cfMarkerNew || null,
+            elRendered: w.__cfMarkerRendered || null,
+            vChart: w.__vChart,
+            stack, xEls: xEls.length, anyStack,
+            svgCount, bars, hasCard, hasRef, labels,
+            stackKeys: el && el._x_dataStack ? el._x_dataStack.map(s => {
+                try { const k = Object.keys(s || {}); const b = typeof s.bulan; const n = (s && s.totalPemasukan); return 'keys:' + k.slice(0, 8).join('|') + ' bulan:' + b + ' tot:' + n; }
+                catch (e) { return 'X:' + e.message; }
+            }) : null,
+            probe: w.__p instanceof Promise ? 'pending' : w.__p,
+            err: w.__cfErr || null
+        });
+        fetch('/diag?d=' + encodeURIComponent(state));
+    } catch (e) {
+        fetch('/diag?d=' + encodeURIComponent('ERR:' + e.message));
+    }
+}, 3000);
+</script>
