@@ -14,11 +14,13 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // halaman publik (tanpa autentikasi)
 Route::get('/publik', [\App\Http\Controllers\PublikController::class, 'index'])->name('publik.index');
-
+Route::get('/', function () {
+    return redirect()->route('publik.index');
+});
 Route::middleware('auth')->group(function () {
 
     // dashboard pages
-    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // master data
     Route::get('/siswa', [StudentController::class, 'index'])->name('siswa.index');
