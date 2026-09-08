@@ -16,14 +16,69 @@
 
             <x-dashboard.rekening-card />
 
-            <a href="{{ route('login') }}"
-                class="inline-flex items-center gap-1 text-theme-sm font-medium text-blue-light-600 transition-colors hover:text-blue-light-700 dark:text-blue-light-400 dark:hover:text-blue-light-300">
-                Masuk
-                <svg class="size-4 rtl:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M5 12h14" />
-                    <polyline points="12 5 19 12 12 19" />
-                </svg>
-            </a>
+            <div class="w-full">
+                <div class="flex items-center gap-4">
+                    <a href="{{ route('login') }}" class="btn-masuk flex-shrink-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" class="mr-2">
+                            <path fill="none" d="M0 0h24v24H0z"></path>
+                            <path fill="currentColor" d="M1 14.5a6.496 6.496 0 0 1 3.064-5.519 8.001 8.001 0 0 1 15.872 0 6.5 6.5 0 0 1-2.936 12L7 21c-3.356-.274-6-3.078-6-6.5zm15.848 4.487a4.5 4.5 0 0 0 2.03-8.309l-.807-.503-.12-.942a6.001 6.001 0 0 0-11.903 0l-.12.942-.805.503a4.5 4.5 0 0 0 2.029 8.309l.173.013h9.35l.173-.013zM13 12h3l-4 5-4-5h3V8h2v4z"></path>
+                        </svg>
+                        <span>Masuk</span>
+                    </a>
+
+                    <div class="flex-1 overflow-hidden">
+                        <div class="relative h-8" aria-live="polite">
+                            <div class="absolute inset-0 animate-marquee whitespace-nowrap flex items-center gap-8"
+                                style="animation-duration: 20s;">
+                                <span class="text-theme-sm text-gray-500 dark:text-gray-400 font-medium">
+                                    {{ $runningText }}
+                                </span>
+                                <span class="text-theme-sm text-gray-500 dark:text-gray-400 font-medium">
+                                    {{ $runningText }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <style>
+                    .btn-masuk {
+                        display: inline-flex;
+                        align-items: center;
+                        font-family: inherit;
+                        cursor: pointer;
+                        font-weight: 500;
+                        font-size: 14px;
+                        padding: 0.5em 1em 0.5em 0.8em;
+                        color: white;
+                        background: linear-gradient(to bottom right, #0ea5e9, #0284c7, #0369a1);
+                        border: none;
+                        box-shadow: 0 4px 12px -2px rgba(14, 165, 233, 0.5);
+                        letter-spacing: 0.025em;
+                        border-radius: 9999px;
+                        text-decoration: none;
+                        transition: box-shadow 0.2s ease, transform 0.1s ease;
+                    }
+
+                    .btn-masuk:hover {
+                        box-shadow: 0 6px 16px -3px rgba(14, 165, 233, 0.6);
+                    }
+
+                    .btn-masuk:active {
+                        box-shadow: 0 2px 8px -2px rgba(14, 165, 233, 0.5);
+                        transform: scale(0.98);
+                    }
+
+                    @keyframes marquee {
+                        0% { transform: translateX(0); }
+                        100% { transform: translateX(-50%); }
+                    }
+
+                    .animate-marquee {
+                        animation: marquee linear infinite;
+                    }
+                </style>
+            </div>
 
             {{-- Baris 2: Pemasukan, pengeluaran, saldo --}}
             <x-dashboard.summary-cards
