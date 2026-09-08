@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ $title ?? 'Dashboard' }} | TailAdmin - Laravel Tailwind CSS Admin Dashboard Template</title>
+    <title>{{ $title ?? 'Dashboard' }} | SDIT GIIS</title>
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -66,7 +66,7 @@
                 init() {
                     const savedState = localStorage.getItem('sidebarExpanded');
                     if (window.innerWidth >= 1280) {
-                        this.isExpanded = savedState === null ? true : savedState === 'true';
+                        this.isExpanded = savedState === 'true';
                     } else {
                         this.isExpanded = false;
                     }
@@ -85,7 +85,7 @@
                     } else {
                         this.isMobileOpen = false;
                         const savedState = localStorage.getItem('sidebarExpanded');
-                        this.isExpanded = savedState === null ? true : savedState === 'true';
+                        this.isExpanded = savedState === 'true';
                     }
                 },
 
@@ -135,7 +135,7 @@
 
 <body>
 
-    <div class="min-h-screen xl:flex sidebar-expanded" x-data :class="{ 'sidebar-expanded': $store.sidebar.isExpanded || $store.sidebar.isHovered || $store.sidebar.isMobileOpen }">
+    <div class="min-h-screen xl:flex" x-data :class="{ 'sidebar-expanded': $store.sidebar.isExpanded || $store.sidebar.isHovered || $store.sidebar.isMobileOpen }">
         @include('layouts.backdrop')
         @include('layouts.sidebar')
 

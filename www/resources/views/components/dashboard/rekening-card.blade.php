@@ -30,17 +30,10 @@
             </p>
             <p class="mt-2 truncate text-theme-sm text-white/80">Atas Nama: {{ $namaPemilik }}</p>
 
-            @guest
-                <a
-                    href="{{ route('login') }}"
-                    class="mt-4 inline-flex items-center gap-1.5 text-theme-sm font-medium text-white/80 transition-colors hover:text-white"
-                >
-                    <svg class="fill-current rtl:rotate-180" width="16" height="16" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M10.48 3.72a.75.75 0 0 1 1.06 0l5.25 5.25a.75.75 0 0 1 0 1.06l-5.25 5.25a.75.75 0 1 1-1.06-1.06l3.97-3.97H4a.75.75 0 0 1 0-1.5h10.44l-3.96-3.97a.75.75 0 0 1 0-1.06Z" />
-                    </svg>
-                    Masuk
-                </a>
-            @endguest
+            <a href="{{ route('login') }}"
+                class="mt-3 inline-flex items-center gap-1 text-theme-sm font-medium text-white/80 transition-colors hover:text-white">
+                &larr; Masuk
+            </a>
         </div>
     </div>
 </div>
