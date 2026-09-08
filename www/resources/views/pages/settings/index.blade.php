@@ -112,15 +112,15 @@
                     </div>
 
                     <div class="sm:col-span-2">
-                        <label for="running_text" class="text-theme-sm font-medium text-gray-800 dark:text-white/90">Running Text (Marquee)</label>
+                        <label for="info_text" class="text-theme-sm font-medium text-gray-800 dark:text-white/90">Informasi / Berita</label>
                         <textarea
-                            id="running_text"
-                            name="running_text"
+                            id="info_text"
+                            name="info_text"
                             rows="6"
-                            placeholder="Teks yang akan ditampilkan di running text halaman publik..."
+                            placeholder="Teks informasi yang akan ditampilkan di halaman publik..."
                             class="mt-2 h-40 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800"
-                        >{{ old('running_text', $settings['running_text'] ?? '') }}</textarea>
-                        @error('running_text')
+                        >{{ old('info_text', $settings['info_text'] ?? '') }}</textarea>
+                        @error('info_text')
                             <p class="mt-1 text-theme-xs text-error-600 dark:text-error-500">{{ $message }}</p>
                         @enderror
                         <p class="mt-1 text-theme-xs text-gray-500 dark:text-gray-400">Kosongkan untuk menggunakan teks default.</p>

@@ -17,8 +17,8 @@
             <x-dashboard.rekening-card />
 
             <div class="w-full">
-                <div class="flex items-center gap-4">
-                    <a href="{{ route('login') }}" class="btn-masuk flex-shrink-0">
+                <div class="flex items-start gap-4">
+                    <a href="{{ route('login') }}" class="btn-masuk flex-shrink-0 mt-1">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" class="mr-2">
                             <path fill="none" d="M0 0h24v24H0z"></path>
                             <path fill="currentColor" d="M1 14.5a6.496 6.496 0 0 1 3.064-5.519 8.001 8.001 0 0 1 15.872 0 6.5 6.5 0 0 1-2.936 12L7 21c-3.356-.274-6-3.078-6-6.5zm15.848 4.487a4.5 4.5 0 0 0 2.03-8.309l-.807-.503-.12-.942a6.001 6.001 0 0 0-11.903 0l-.12.942-.805.503a4.5 4.5 0 0 0 2.029 8.309l.173.013h9.35l.173-.013zM13 12h3l-4 5-4-5h3V8h2v4z"></path>
@@ -26,17 +26,12 @@
                         <span>Masuk</span>
                     </a>
 
-                    <div class="flex-1 overflow-hidden">
-                        <div class="relative h-8" aria-live="polite">
-                            <div class="absolute inset-0 animate-marquee whitespace-nowrap flex items-center gap-8"
-                                style="animation-duration: 1s;">
-                                <span class="text-theme-sm text-gray-500 dark:text-gray-400 font-medium">
-                                    {{ $runningText }}
-                                </span>
-                                <span class="text-theme-sm text-gray-500 dark:text-gray-400 font-medium">
-                                    {{ $runningText }}
-                                </span>
-                            </div>
+                    <div class="flex-1">
+                        <div class="rounded-2xl border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-white/[0.03]">
+                            <h3 class="text-sm font-semibold text-gray-800 dark:text-white/90">Informasi</h3>
+                            <p class="mt-2 text-theme-sm text-gray-600 dark:text-gray-400 whitespace-pre-line">
+                                {{ $infoText }}
+                            </p>
                         </div>
                     </div>
                 </div>

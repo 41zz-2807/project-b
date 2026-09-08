@@ -25,7 +25,7 @@ class SettingController extends Controller
             'nama_bank' => ['nullable', 'string', 'max:255'],
             'no_rekening' => ['nullable', 'string', 'max:50'],
             'nama_pemilik' => ['nullable', 'string', 'max:255'],
-            'running_text' => ['nullable', 'string', 'max:10000'],
+            'info_text' => ['nullable', 'string', 'max:10000'],
         ]);
 
         $map = [
@@ -36,7 +36,7 @@ class SettingController extends Controller
             'nama_bank' => $validated['nama_bank'] ?? '',
             'no_rekening' => $validated['no_rekening'] ?? '',
             'nama_pemilik' => $validated['nama_pemilik'] ?? '',
-            'running_text' => $validated['running_text'] ?? '',
+            'info_text' => $validated['info_text'] ?? '',
         ];
 
         foreach ($map as $key => $value) {

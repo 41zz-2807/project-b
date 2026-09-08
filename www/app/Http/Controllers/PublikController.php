@@ -18,7 +18,7 @@ class PublikController extends Controller
             ->limit(15)
             ->get();
 
-        $runningText = setting('running_text') ?? "Selamat datang di sistem informasi pembayaran kas dan komite {{ \$namaSekolah }} — Kelas {{ \$namaKelas }} — Transparansi keuangan untuk masa depan yang lebih baik —";
+        $infoText = setting('info_text') ?? "Informasi pembayaran kas dan komite akan ditampilkan di sini.";
 
         return view('pages.publik.index', [
             'title' => setting('nama_sekolah') ?: 'Publik',
@@ -31,7 +31,7 @@ class PublikController extends Controller
             'totalPengeluaran' => $totalPengeluaran,
             'totalSaldo' => $totalSaldo,
             'transaksis' => $transaksis,
-            'runningText' => $runningText,
+            'infoText' => $infoText,
         ]);
     }
 }
