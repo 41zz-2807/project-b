@@ -25,7 +25,7 @@ class SettingController extends Controller
             'nama_bank' => ['nullable', 'string', 'max:255'],
             'no_rekening' => ['nullable', 'string', 'max:50'],
             'nama_pemilik' => ['nullable', 'string', 'max:255'],
-            'running_text' => ['nullable', 'string', 'max:500'],
+            'running_text' => ['nullable', 'string', 'max:2000'],
         ]);
 
         $map = [
