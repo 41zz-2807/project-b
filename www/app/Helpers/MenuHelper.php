@@ -20,7 +20,7 @@ class MenuHelper
             [
                 'title' => 'Menu',
                 'items' => [
-                    ['name' => 'Dashboard', 'path' => '/', 'icon' => 'dashboard'],
+                    ['name' => 'Dashboard', 'path' => '/dashboard', 'icon' => 'dashboard'],
                 ],
             ],
             [
