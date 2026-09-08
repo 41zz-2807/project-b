@@ -4,25 +4,14 @@
     <div class="relative z-1 bg-white dark:bg-gray-900">
         <div class="mx-auto w-full max-w-6xl space-y-6 px-4 py-8 sm:px-6 sm:py-10">
 
-            {{-- Baris 1: Nama sekolah & tombol masuk --}}
-            <header class="flex items-center justify-between gap-4">
-                <div class="min-w-0 flex-1 text-center sm:text-start">
-                    <h1 class="text-title-md font-bold tracking-tight text-gray-800 dark:text-white/90">
-                        {{ $namaSekolah }}
-                    </h1>
-                    <p class="mt-2 text-theme-sm text-gray-500 dark:text-gray-400">
-                        {{ $namaKelas }}
-                    </p>
-                </div>
-                <a href="{{ route('login') }}"
-                    class="inline-flex shrink-0 items-center gap-1.5 rounded-xl bg-brand-500 px-4 py-2.5 text-theme-sm font-medium text-white shadow-theme-xs transition-colors hover:bg-brand-600">
-                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
-                        <polyline points="10 17 15 12 10 7" />
-                        <line x1="15" y1="12" x2="3" y2="12" />
-                    </svg>
-                    Masuk
-                </a>
+            {{-- Baris 1: Nama sekolah --}}
+            <header class="text-center">
+                <h1 class="text-title-md font-bold tracking-tight text-gray-800 dark:text-white/90">
+                    {{ $namaSekolah }}
+                </h1>
+                <p class="mt-2 text-theme-sm text-gray-500 dark:text-gray-400">
+                    {{ $namaKelas }}
+                </p>
             </header>
 
             <x-dashboard.rekening-card />
