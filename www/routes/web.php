@@ -15,7 +15,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 // halaman publik (tanpa autentikasi)
 Route::get('/publik', [\App\Http\Controllers\PublikController::class, 'index'])->name('publik.index');
 Route::get('/', function () {
-    return redirect()->route('login');
+    return redirect()->route('publik.index');
 });
 Route::middleware('auth')->group(function () {
 

@@ -29,11 +29,6 @@
                 {{ $noRekDisplay }}
             </p>
             <p class="mt-2 truncate text-theme-sm text-white/80">Atas Nama: {{ $namaPemilik }}</p>
-
-            <a href="{{ route('login') }}"
-                class="mt-3 inline-flex items-center gap-1 text-theme-sm font-medium text-white/80 transition-colors hover:text-white">
-                &larr; Masuk
-            </a>
         </div>
     </div>
 </div>
