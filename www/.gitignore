@@ -5,6 +5,7 @@
 .env.production
 .phpactor.json
 .phpunit.result.cache
+docker-compose.yml
 /.fleet
 /.idea
 /.nova
