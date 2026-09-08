@@ -29,7 +29,7 @@
                     <div class="flex-1 overflow-hidden">
                         <div class="relative h-8" aria-live="polite">
                             <div class="absolute inset-0 animate-marquee whitespace-nowrap flex items-center gap-8"
-                                style="animation-duration: 10s;">
+                                style="animation-duration: 1s;">
                                 <span class="text-theme-sm text-gray-500 dark:text-gray-400 font-medium">
                                     {{ $runningText }}
                                 </span>
