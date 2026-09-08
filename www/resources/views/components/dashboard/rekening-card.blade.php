@@ -29,15 +29,6 @@
                 {{ $noRekDisplay }}
             </p>
             <p class="mt-2 truncate text-theme-sm text-white/80">Atas Nama: {{ $namaPemilik }}</p>
-
-            <a href="{{ route('login') }}"
-                class="mt-3 inline-flex items-center gap-1 text-theme-sm font-medium text-white/90 transition-colors hover:text-white">
-                Masuk
-                <svg class="size-4 rtl:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M5 12h14" />
-                    <polyline points="12 5 19 12 12 19" />
-                </svg>
-            </a>
         </div>
     </div>
 </div>

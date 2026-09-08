@@ -16,6 +16,15 @@
 
             <x-dashboard.rekening-card />
 
+            <a href="{{ route('login') }}"
+                class="inline-flex items-center gap-1 text-theme-sm font-medium text-blue-light-600 transition-colors hover:text-blue-light-700 dark:text-blue-light-400 dark:hover:text-blue-light-300">
+                Masuk
+                <svg class="size-4 rtl:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14" />
+                    <polyline points="12 5 19 12 12 19" />
+                </svg>
+            </a>
+
             {{-- Baris 2: Pemasukan, pengeluaran, saldo --}}
             <x-dashboard.summary-cards
                 :totalPemasukan="$totalPemasukan"
