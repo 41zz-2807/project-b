@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Setting;
+use App\Services\TelegramNotifier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Process;
 
@@ -26,6 +27,8 @@ class SettingController extends Controller
             'no_rekening' => ['nullable', 'string', 'max:50'],
             'nama_pemilik' => ['nullable', 'string', 'max:255'],
             'info_text' => ['nullable', 'string', 'max:10000'],
+            'telegram_report_enabled' => ['nullable', 'string'],
+            'telegram_report_jam' => ['nullable', 'string', 'max:5'],
         ]);
 
         $map = [
@@ -37,6 +40,8 @@ class SettingController extends Controller
             'no_rekening' => $validated['no_rekening'] ?? '',
             'nama_pemilik' => $validated['nama_pemilik'] ?? '',
             'info_text' => $validated['info_text'] ?? '',
+            'telegram_report_enabled' => ($validated['telegram_report_enabled'] ?? '') === '1' ? '1' : '0',
+            'telegram_report_jam' => $validated['telegram_report_jam'] ?? '',
         ];
 
         foreach ($map as $key => $value) {
@@ -44,6 +49,23 @@ class SettingController extends Controller
         }
 
         return back()->with('status', 'Pengaturan berhasil disimpan.');
+    }
+
+    public function sendTelegramReport()
+    {
+        $notifier = app(TelegramNotifier::class);
+
+        if (! $notifier->enabled()) {
+            return back()->with('error', 'Notifikasi Telegram belum dikonfigurasi. Aktifkan dan isi token serta chat ID di .env terlebih dahulu.');
+        }
+
+        $sent = $notifier->sendReport();
+
+        if ($sent) {
+            return back()->with('status', 'Laporan berhasil dikirim ke Telegram.');
+        }
+
+        return back()->with('error', 'Gagal mengirim laporan ke Telegram. Periksa log untuk detail.');
     }
 
     public function backup()

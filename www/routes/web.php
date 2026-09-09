@@ -47,6 +47,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/pengaturan', [SettingController::class, 'index'])->name('pengaturan.index');
     Route::post('/pengaturan', [SettingController::class, 'update'])->name('pengaturan.update');
     Route::get('/pengaturan/backup', [SettingController::class, 'backup'])->name('pengaturan.backup');
+    Route::post('/pengaturan/kirim-laporan-telegram', [SettingController::class, 'sendTelegramReport'])->name('pengaturan.telegram.laporan');
 
     // calender pages
     Route::get('/calendar', function () {

@@ -17,6 +17,8 @@ class SettingSeeder extends Seeder
             'nama_bank' => '',
             'no_rekening' => '',
             'nama_pemilik' => '',
+            'telegram_report_enabled' => '0',
+            'telegram_report_jam' => '',
         ];
 
         foreach ($defaults as $key => $value) {

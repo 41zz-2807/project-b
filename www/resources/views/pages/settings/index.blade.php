@@ -39,6 +39,8 @@
                 <input type="hidden" name="nama_bank" value="{{ old('nama_bank', $settings['nama_bank'] ?? '') }}" />
                 <input type="hidden" name="no_rekening" value="{{ old('no_rekening', $settings['no_rekening'] ?? '') }}" />
                 <input type="hidden" name="nama_pemilik" value="{{ old('nama_pemilik', $settings['nama_pemilik'] ?? '') }}" />
+                <input type="hidden" name="telegram_report_enabled" value="{{ old('telegram_report_enabled', $settings['telegram_report_enabled'] ?? '0') }}" />
+                <input type="hidden" name="telegram_report_jam" value="{{ old('telegram_report_jam', $settings['telegram_report_jam'] ?? '') }}" />
 
                 <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
                     <div>
@@ -158,6 +160,8 @@
                 <input type="hidden" name="nama_kelas" value="{{ old('nama_kelas', $settings['nama_kelas'] ?? '') }}" />
                 <input type="hidden" name="iuran_kas" value="{{ old('iuran_kas', $settings['iuran_kas'] ?? 0) }}" />
                 <input type="hidden" name="iuran_komite" value="{{ old('iuran_komite', $settings['iuran_komite'] ?? 0) }}" />
+                <input type="hidden" name="telegram_report_enabled" value="{{ old('telegram_report_enabled', $settings['telegram_report_enabled'] ?? '0') }}" />
+                <input type="hidden" name="telegram_report_jam" value="{{ old('telegram_report_jam', $settings['telegram_report_jam'] ?? '') }}" />
 
                 <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
                     <div>
@@ -215,6 +219,104 @@
                     </button>
                 </div>
             </form>
+        </div>
+
+        {{-- Backup Database --}}
+        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] sm:p-6">
+            <div class="mb-6">
+                <h3 class="text-lg font-semibold text-gray-800 dark:text-white/90">Laporan Telegram</h3>
+                <p class="mt-1 text-theme-sm text-gray-500 dark:text-gray-400">
+                    Kirim laporan keuangan ringkas secara otomatis atau manual ke Telegram.
+                </p>
+            </div>
+
+            <form method="POST" action="{{ route('pengaturan.update') }}">
+                @csrf
+
+                <input type="hidden" name="nama_sekolah" value="{{ old('nama_sekolah', $settings['nama_sekolah'] ?? '') }}" />
+                <input type="hidden" name="nama_kelas" value="{{ old('nama_kelas', $settings['nama_kelas'] ?? '') }}" />
+                <input type="hidden" name="iuran_kas" value="{{ old('iuran_kas', $settings['iuran_kas'] ?? 0) }}" />
+                <input type="hidden" name="iuran_komite" value="{{ old('iuran_komite', $settings['iuran_komite'] ?? 0) }}" />
+                <input type="hidden" name="nama_bank" value="{{ old('nama_bank', $settings['nama_bank'] ?? '') }}" />
+                <input type="hidden" name="no_rekening" value="{{ old('no_rekening', $settings['no_rekening'] ?? '') }}" />
+                <input type="hidden" name="nama_pemilik" value="{{ old('nama_pemilik', $settings['nama_pemilik'] ?? '') }}" />
+                <input type="hidden" name="info_text" value="{{ old('info_text', $settings['info_text'] ?? '') }}" />
+
+                <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                    <div>
+                        <label class="text-theme-sm font-medium text-gray-800 dark:text-white/90">Kirim Laporan Otomatis</label>
+                        <div class="mt-2 flex items-center gap-3" x-data="{ enabled: {{ (old('telegram_report_enabled', $settings['telegram_report_enabled'] ?? '0') === '1') ? 'true' : 'false' }} }">
+                            <label class="flex cursor-pointer items-center gap-3">
+                                <div class="relative">
+                                    <input type="hidden" name="telegram_report_enabled" :value="enabled ? '1' : '0'" />
+                                    <input
+                                        type="checkbox"
+                                        class="sr-only"
+                                        @change="enabled = !enabled"
+                                        :checked="enabled"
+                                    />
+                                    <div class="block h-6 w-11 rounded-full"
+                                        :class="enabled ? 'bg-brand-500 dark:bg-brand-500' : 'bg-gray-200 dark:bg-white/10'">
+                                    </div>
+                                    <div :class="enabled ? 'ltr:translate-x-full rtl:-translate-x-full' : 'translate-x-0'"
+                                        class="shadow-theme-sm absolute top-0.5 ltr:left-0.5 rtl:right-0.5 h-5 w-5 rounded-full bg-white duration-300 ease-linear">
+                                    </div>
+                                </div>
+                                <span class="text-theme-sm text-gray-700 dark:text-gray-300" x-text="enabled ? 'Aktif' : 'Nonaktif'"></span>
+                            </label>
+                        </div>
+                        <p class="mt-1 text-theme-xs text-gray-500 dark:text-gray-400">Aktifkan untuk mengirim laporan otomatis sesuai jadwal.</p>
+                    </div>
+
+                    <div>
+                        <label for="telegram_report_jam" class="text-theme-sm font-medium text-gray-800 dark:text-white/90">Jam Pengiriman</label>
+                        <input
+                            type="time"
+                            id="telegram_report_jam"
+                            name="telegram_report_jam"
+                            value="{{ old('telegram_report_jam', $settings['telegram_report_jam'] ?? '') }}"
+                            class="mt-2 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800"
+                        />
+                        @error('telegram_report_jam')
+                            <p class="mt-1 text-theme-xs text-error-600 dark:text-error-500">{{ $message }}</p>
+                        @enderror
+                        <p class="mt-1 text-theme-xs text-gray-500 dark:text-gray-400">Waktu pengiriman laporan harian (WIB).</p>
+                    </div>
+                </div>
+
+                <div class="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-end">
+                    <button
+                        type="submit"
+                        class="inline-flex items-center justify-center gap-2 rounded-lg bg-brand-500 px-5 py-3 text-theme-sm font-semibold text-white shadow-theme-xs transition-colors hover:bg-brand-600 dark:bg-brand-500 dark:hover:bg-brand-600"
+                    >
+                        Simpan Pengaturan Telegram
+                    </button>
+                </div>
+            </form>
+
+            <div class="mt-5 border-t border-gray-200 pt-5 dark:border-gray-800">
+                <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                    <div>
+                        <p class="text-theme-sm font-medium text-gray-800 dark:text-white/90">Kirim Laporan Manual</p>
+                        <p class="mt-1 text-theme-xs text-gray-500 dark:text-gray-400">
+                            Kirim laporan keuangan saat ini ke Telegram tanpa menunggu jadwal.
+                        </p>
+                    </div>
+                    <form method="POST" action="{{ route('pengaturan.telegram.laporan') }}">
+                        @csrf
+                        <button
+                            type="submit"
+                            class="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white px-5 py-3 text-theme-sm font-medium text-gray-700 shadow-theme-xs hover:bg-gray-50 hover:text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200"
+                        >
+                            <svg class="stroke-current fill-white dark:fill-gray-800" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M22 2L11 13" stroke="" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Kirim ke Telegram
+                        </button>
+                    </form>
+                </div>
+            </div>
         </div>
 
         {{-- Backup Database --}}
