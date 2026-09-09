@@ -20,15 +20,27 @@ class TelegramReport extends Command
         }
 
         $jamSetting = (string) setting('telegram_report_jam', '');
+        $hariSetting = (string) setting('telegram_report_hari', '');
 
-        if (! $this->option('force') && $jamSetting !== '') {
+        if (! $this->option('force')) {
             $jamSekarang = now()->timezone('Asia/Jakarta')->format('H:i');
             $jamKirim = substr($jamSetting, 0, 5);
 
-            if ($jamSekarang !== $jamKirim) {
+            if ($jamSetting !== '' && $jamSekarang !== $jamKirim) {
                 $this->info("Belum waktunya kirim laporan. Jadwal: {$jamKirim}, sekarang: {$jamSekarang}.");
 
                 return self::SUCCESS;
+            }
+
+            if ($hariSetting !== '') {
+                $hariDipilih = array_map('trim', explode(',', $hariSetting));
+                $hariSekarang = strtolower(now()->timezone('Asia/Jakarta')->locale('id')->isoFormat('dddd'));
+
+                if (! in_array($hariSekarang, $hariDipilih, true)) {
+                    $this->info("Hari ini ({$hariSekarang}) tidak termasuk jadwal pengiriman. Hari terpilih: ".implode(', ', $hariDipilih).'.');
+
+                    return self::SUCCESS;
+                }
             }
         }
 

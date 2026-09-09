@@ -19,6 +19,7 @@ class SettingSeeder extends Seeder
             'nama_pemilik' => '',
             'telegram_report_enabled' => '0',
             'telegram_report_jam' => '',
+            'telegram_report_hari' => '',
         ];
 
         foreach ($defaults as $key => $value) {

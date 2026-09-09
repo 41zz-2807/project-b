@@ -41,6 +41,11 @@
                 <input type="hidden" name="nama_pemilik" value="{{ old('nama_pemilik', $settings['nama_pemilik'] ?? '') }}" />
                 <input type="hidden" name="telegram_report_enabled" value="{{ old('telegram_report_enabled', $settings['telegram_report_enabled'] ?? '0') }}" />
                 <input type="hidden" name="telegram_report_jam" value="{{ old('telegram_report_jam', $settings['telegram_report_jam'] ?? '') }}" />
+                @foreach (explode(',', $settings['telegram_report_hari'] ?? '') as $hari)
+                    @if ($hari !== '')
+                        <input type="hidden" name="telegram_report_hari[]" value="{{ $hari }}" />
+                    @endif
+                @endforeach
 
                 <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
                     <div>
@@ -162,6 +167,11 @@
                 <input type="hidden" name="iuran_komite" value="{{ old('iuran_komite', $settings['iuran_komite'] ?? 0) }}" />
                 <input type="hidden" name="telegram_report_enabled" value="{{ old('telegram_report_enabled', $settings['telegram_report_enabled'] ?? '0') }}" />
                 <input type="hidden" name="telegram_report_jam" value="{{ old('telegram_report_jam', $settings['telegram_report_jam'] ?? '') }}" />
+                @foreach (explode(',', $settings['telegram_report_hari'] ?? '') as $hari)
+                    @if ($hari !== '')
+                        <input type="hidden" name="telegram_report_hari[]" value="{{ $hari }}" />
+                    @endif
+                @endforeach
 
                 <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
                     <div>
@@ -282,6 +292,43 @@
                         @enderror
                         <p class="mt-1 text-theme-xs text-gray-500 dark:text-gray-400">Waktu pengiriman laporan harian (WIB).</p>
                     </div>
+                </div>
+
+                <div class="mt-5" x-data="{ hari: @js(collect(explode(',', $settings['telegram_report_hari'] ?? ''))->map(fn($v) => trim($v))->filter()->values()->all()) }">
+                    <label class="text-theme-sm font-medium text-gray-800 dark:text-white/90">Hari Pengiriman</label>
+                    <p class="mt-1 text-theme-xs text-gray-500 dark:text-gray-400">Pilih hari laporan otomatis dikirim. Kosongkan untuk mengirim setiap hari.</p>
+                    <div class="mt-3 flex flex-wrap gap-2">
+                        @php
+                            $daftarHari = [
+                                'senin' => 'Senin',
+                                'selasa' => 'Selasa',
+                                'rabu' => 'Rabu',
+                                'kamis' => 'Kamis',
+                                'jumat' => 'Jumat',
+                                'sabtu' => 'Sabtu',
+                                'minggu' => 'Minggu',
+                            ];
+                        @endphp
+                        @foreach ($daftarHari as $kode => $label)
+                            <label class="inline-flex cursor-pointer items-center">
+                                <input
+                                    type="checkbox"
+                                    class="sr-only"
+                                    :checked="hari.includes('{{ $kode }}')"
+                                    @change="hari.includes('{{ $kode }}') ? hari.splice(hari.indexOf('{{ $kode }}'), 1) : hari.push('{{ $kode }}')"
+                                />
+                                <span
+                                    class="rounded-lg border px-4 py-2 text-theme-sm font-medium transition-colors"
+                                    :class="hari.includes('{{ $kode }}')
+                                        ? 'border-brand-500 bg-brand-500 text-white'
+                                        : 'border-gray-300 bg-white text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-white/[0.03]'"
+                                >{{ $label }}</span>
+                            </label>
+                        @endforeach
+                    </div>
+                    <template x-for="h in hari" :key="h">
+                        <input type="hidden" name="telegram_report_hari[]" :value="h" />
+                    </template>
                 </div>
 
                 <div class="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-end">

@@ -29,6 +29,8 @@ class SettingController extends Controller
             'info_text' => ['nullable', 'string', 'max:10000'],
             'telegram_report_enabled' => ['nullable', 'string'],
             'telegram_report_jam' => ['nullable', 'string', 'max:5'],
+            'telegram_report_hari' => ['nullable', 'array'],
+            'telegram_report_hari.*' => ['in:senin,selasa,rabu,kamis,jumat,sabtu,minggu'],
         ]);
 
         $map = [
@@ -42,6 +44,7 @@ class SettingController extends Controller
             'info_text' => $validated['info_text'] ?? '',
             'telegram_report_enabled' => ($validated['telegram_report_enabled'] ?? '') === '1' ? '1' : '0',
             'telegram_report_jam' => $validated['telegram_report_jam'] ?? '',
+            'telegram_report_hari' => implode(',', $validated['telegram_report_hari'] ?? []),
         ];
 
         foreach ($map as $key => $value) {

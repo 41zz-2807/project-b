@@ -38,7 +38,7 @@ class TelegramNotifier
 
         try {
             $response = Http::timeout(30)
-                ->connectTimeout(15)
+                ->connectTimeout(20)
                 ->post("https://api.telegram.org/bot{$this->token}/sendMessage", [
                     'chat_id' => $this->chatId,
                     'text' => $message,
@@ -182,8 +182,8 @@ class TelegramNotifier
                 ];
             }
 
-            $response = Http::timeout(30)
-                ->connectTimeout(15)
+            $response = Http::timeout(60)
+                ->connectTimeout(20)
                 ->asMultipart()
                 ->post("https://api.telegram.org/bot{$this->token}/sendDocument", $multipart);
 
