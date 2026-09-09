@@ -43,6 +43,14 @@ class TransactionController extends Controller
         return $pdf->download('laporan-kas-komite-'.now()->format('Y-m-d').'.pdf');
     }
 
+    public function laporanPdfPublik(Request $request)
+    {
+        $pdf = Pdf::loadView('pages.transaksi.laporan_pdf', $this->dataLaporan())
+            ->setPaper('a4', 'landscape');
+
+        return $pdf->download('laporan-kas-komite-'.now()->format('Y-m-d').'.pdf');
+    }
+
     public function laporanXlsx(Request $request)
     {
         $data = $this->dataLaporan();

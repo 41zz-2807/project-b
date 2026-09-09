@@ -14,6 +14,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // halaman publik (tanpa autentikasi)
 Route::get('/publik', [\App\Http\Controllers\PublikController::class, 'index'])->name('publik.index');
+Route::get('/publik/laporan/pdf', [TransactionController::class, 'laporanPdfPublik'])->name('publik.laporan.pdf');
 Route::get('/', function () {
     return redirect()->route('publik.index');
 });
