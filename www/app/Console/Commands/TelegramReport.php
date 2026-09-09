@@ -46,8 +46,7 @@ class TelegramReport extends Command
 
         $this->info('Mengirim laporan ke Telegram...');
 
-        $message = $notifier->generateReportMessage();
-        $sent = $notifier->send($message);
+        $sent = $notifier->sendReport();
 
         if ($sent) {
             $this->info('Laporan berhasil dikirim ke Telegram.');

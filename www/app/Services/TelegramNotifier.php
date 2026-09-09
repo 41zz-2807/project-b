@@ -219,7 +219,8 @@ class TelegramNotifier
                 'namaKelas' => (string) setting('nama_kelas', ''),
             ])->setPaper('a4', 'landscape');
 
-            $path = tempnam(sys_get_temp_dir(), 'laporan').'.pdf';
+            $tanggal = now()->timezone('Asia/Jakarta')->format('Y-m-d_H-i');
+            $path = sys_get_temp_dir().'/laporan-keuangan-'.$tanggal.'.pdf';
             file_put_contents($path, $pdf->output());
 
             return $path;
