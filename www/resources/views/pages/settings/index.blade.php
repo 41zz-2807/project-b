@@ -217,9 +217,6 @@
             </form>
         </div>
 
-        {{-- Kartu Pratinjau --}}
-        <x-dashboard.identity-card />
-
         {{-- Backup Database --}}
         <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] sm:p-6">
             <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
