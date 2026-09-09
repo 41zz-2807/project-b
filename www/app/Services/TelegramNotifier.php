@@ -134,7 +134,12 @@ class TelegramNotifier
         $msg .= "━━━━━━━━━━━━━━━━━━━━━\n";
         $msg .= "👨‍🎓 <b>Status Pembayaran Siswa</b>\n";
         $msg .= "✅ Lunas: {$lunas} siswa\n";
-        $msg .= "❌ Belum Lunas: {$belumLunas} siswa\n";
+        $msg .= "❌ Belum Lunas: {$belumLunas} siswa\n\n";
+
+        $appUrl = setting('app_url', '') ?: url('/dashboard');
+        $sumberUrl = rtrim($appUrl, '/').'/dashboard';
+
+        $msg .= "📎 Sumber: <a href=\"{$sumberUrl}\">{$sumberUrl}</a>\n";
 
         return $msg;
     }
